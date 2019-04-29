@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+  couchdb:
+    image: couchdb
+    ports:
+      - "5984:5984"
+    environment:
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=letmein
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:5984"]
+        interval: 30s
+        timeout: 10s
+        retries: 5
+
+  app:
+    build: .
+    command: bash -c "yarn install && npm run start:dev"
+    ports:
+      - "5000:5000"
+    volumes:
+      - ".:/src"
+    environment:
+      - COUCHDB_HOST=couchdb
+      - COUCHDB_USER=admin
+      - COUCHDB_PASSWORD=letmein
+    depends_on:
+      - couchdb
+    links:
+      - couchdb
