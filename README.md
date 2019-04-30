@@ -25,3 +25,9 @@ You can configure the application to point at your CouchDB instance with the fol
 | COUCHDB_PROTOCOL | http |
 | COUCHDB_USER | null |
 | COUCHDB_PASSWORD | null |
+
+### utilities
+
+You can access the CouchDB web interface by going to `/_utils`.
+
+If running the default docker-compose environment provided in this repository the CouchDB UI will be located at: http://localhost:5984/_utils
