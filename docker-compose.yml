@@ -7,6 +7,9 @@ services:
     environment:
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=letmein
+    volumes:
+      - "./data/couchdb/config:/opt/couchdb/etc/local.d/"
+      - "./data/couchdb/data:/opt/couchdb/data/"
     healthcheck:
         test: ["CMD", "curl", "-f", "http://localhost:5984"]
         interval: 30s
@@ -24,6 +27,7 @@ services:
       - COUCHDB_HOST=couchdb
       - COUCHDB_USER=admin
       - COUCHDB_PASSWORD=letmein
+      - env=development
     depends_on:
       - couchdb
     links:

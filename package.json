@@ -1,26 +1,26 @@
 {
-  "name": "door-knocker",
-  "version": "0.1.0",
-  "description": "Knocks on doors",
-  "main": "server.js",
-  "repository": "git@github.com:datkinson/door-knocker.git",
-  "author": "Daniel Atkinson <dan@atkinsons.email>",
-  "license": "GPL",
+  "name": "myapp",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "start": "node server.js",
-    "start:dev": "node server.js",
-    "lint": "eslint ."
+    "start": "node ./bin/www",
+    "start:dev": "node ./bin/www",
+    "lint": "eslint . --ext .js"
   },
   "dependencies": {
-    "nano": "^8.0.1"
-  },
-  "devDependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.17.2",
     "eslint-plugin-node": "^8.0.1",
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
-    "eslint-plugin-vue": "^5.2.2"
+    "eslint-plugin-vue": "^5.2.2",
+    "express": "~4.16.0",
+    "hbs": "~4.0.1",
+    "http-errors": "~1.6.2",
+    "morgan": "~1.9.0",
+    "nano": "^8.0.1"
   }
 }
