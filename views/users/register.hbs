@@ -1,0 +1,11 @@
+<h1>{{title}}</h1>
+
+{{form-open 'user' url class='form'}}
+{{form-label 'username' 'Username'}}
+{{form-text 'username' user.username}}
+{{form-label 'password' 'Password'}}
+{{form-password 'password'}}
+{{form-label 'email' 'Email'}}
+{{form-email 'email' user.email}}
+{{form-submit 'save' 'Submit form'}}
+{{form-close}}

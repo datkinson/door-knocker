@@ -3,15 +3,27 @@ var express = require('express')
 var path = require('path')
 var cookieParser = require('cookie-parser')
 var logger = require('morgan')
+const exphbs = require('express-handlebars')
+const hbsFormHelper = require('handlebars-form-helper')
 
 var indexRouter = require('./routes/index')
 var usersRouter = require('./routes/users')
 
 var app = express()
 
+const hbs = exphbs.create({
+    defaultLayout: 'app',
+    extname: '.hbs',
+    layoutsDir: `${__dirname}/views/layouts/`,
+    partialsDir: `${__dirname}/views/partials/`
+})
+hbsFormHelper.registerHelpers(hbs.handlebars, { namespace: 'form' })
+app.engine('.hbs', hbs.engine)
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'))
-app.set('view engine', 'hbs')
+// app.set('view engine', 'hbs')
+app.set('view engine', '.hbs')
 
 app.use(logger('dev'))
 app.use(express.json())
