@@ -1,0 +1,11 @@
+ <div class="container">
+  <h1>{{title}}</h1>
+
+<ul class="list-group">
+  <li class="list-group-item active">Name: {{site.name}}</li>
+  <li class="list-group-item">URL: {{site.url}}</li>
+  <li class="list-group-item">Search Term: {{site.searchString}}</li>
+  <li class="list-group-item">Response Code: {{site.responseCode}}</li>
+</ul>
+<a class="btn btn-secondary" href="/sites/">Back</a>
+<a class="btn btn-info float-right" href="/sites/edit/{{site._id}}">Edit</a>

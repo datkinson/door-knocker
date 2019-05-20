@@ -1,0 +1,30 @@
+ <div class="container">
+  <h1>{{title}}</h1>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Url</th>
+        <th scope="col">Search Term</th>
+        <th scope="col">Response Code</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each sites}}
+      <tr>
+          <th scope="row">{{name}}</th>
+          <td>{{url}}</td>
+          <td>{{searchString}}</td>
+          <td>{{responseCode}}</td>
+          <td>
+            <a class="btn btn-primary" href="/sites/view/{{_id}}">View</a>
+            <a class="btn btn-info" href="/sites/edit/{{_id}}">Edit</a>
+          </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+  <a class="btn btn-primary" href="/sites/register">Add Site</a>
+</div>

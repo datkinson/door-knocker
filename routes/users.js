@@ -21,6 +21,8 @@ router.post('/register', function (req, res, next) {
     database.users.insert(
         {
             username: req.body.username,
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
             password: req.body.password,
             email: req.body.email
         }
@@ -44,21 +46,6 @@ router.post('/register', function (req, res, next) {
                 res.render('users/register', { title: 'Register', user: {}, error: err })
             }
         )
-})
-
-router.get('/create', function (req, res, next) {
-    database.users.insert(
-        {
-            _id: '1',
-            username: 'admin',
-            password: 'admin'
-        }
-    ).then((result) => {
-        console.log('created user')
-        res.render('index', { title: 'Created' })
-    }).catch((err) => {
-        console.error('unable to create user', err)
-    })
 })
 
 module.exports = router

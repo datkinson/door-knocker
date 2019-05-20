@@ -1,0 +1,42 @@
+<h1>{{title}}</h1>
+<div class="row justify-content-center">
+    <div class="col-md-8 order-md-1">
+      <h4 class="mb-3">New Site</h4>
+      {{form-open 'site' url class='needs-validation'}}
+        <div class="mb-3">
+          <label for="name">Name</label>
+          {{form-text 'name' site.name class="form-control" id="name"}}
+          <div class="invalid-feedback">
+            Valid name is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="url">URL</label>
+          {{form-text 'url' site.url class="form-control" id="url"}}
+          <div class="invalid-feedback">
+            Valid URL is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="searchString">Search Term</label>
+          {{form-text 'searchString' site.searchString class="form-control" id="searchString"}}
+          <div class="invalid-feedback">
+            Valid search term is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="responseCode">Response Code</label>
+          {{form-text 'responseCode' site.responseCode class="form-control" id="responseCode"}}
+          <div class="invalid-feedback">
+            Valid response code is required.
+          </div>
+        </div>
+
+        <hr class="mb-4">
+        {{form-submit 'save' 'Save Site' class="btn btn-primary btn-lg btn-block"}}
+      {{form-close}}
+    </div>
+</div>
