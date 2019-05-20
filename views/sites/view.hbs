@@ -3,9 +3,35 @@
 
 <ul class="list-group">
   <li class="list-group-item active">Name: {{site.name}}</li>
-  <li class="list-group-item">URL: {{site.url}}</li>
-  <li class="list-group-item">Search Term: {{site.searchString}}</li>
-  <li class="list-group-item">Response Code: {{site.responseCode}}</li>
+  <li class="list-group-item">Homepage: {{site.homepage}}</li>
 </ul>
+
+<h3>
+  Checks
+  <small class="text-muted">Endpoints being checked on this site.</small>
+</h3>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Name</th>
+      <th scope="col">URL</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each checks}}
+    <tr>
+        <th scope="row">{{name}}</th>
+        <td>{{url}}</td>
+        <td>
+          <a class="btn btn-primary" href="/sites/view/{{siteId}}/check/{{_id}}">View</a>
+          <a class="btn btn-info" href="/sites/edit/{{siteId}}/check/{{_id}}">Edit</a>
+        </td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
 <a class="btn btn-secondary" href="/sites/">Back</a>
 <a class="btn btn-info float-right" href="/sites/edit/{{site._id}}">Edit</a>
+<a class="btn btn-success float-right" href="/sites/register/{{site._id}}/check">Add Check</a>

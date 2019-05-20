@@ -31,6 +31,11 @@ Promise.resolve(nano.db.create('sites').catch(() => {
     console.log('unable to create database: sites')
 }))
 database.sites = nano.db.use('sites')
+
+Promise.resolve(nano.db.create('checks').catch(() => {
+    console.log('unable to create database: checks')
+}))
+database.checks = nano.db.use('checks')
 // console.log('creating sites database', database)
 
 // async function createDatabase (databaseName) {

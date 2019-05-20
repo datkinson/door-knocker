@@ -12,7 +12,23 @@ router.get('/', function (req, res, next) {
 
 router.get('/view/:siteId', function (req, res, next) {
     database.sites.get(req.params.siteId, { include_docs: true }).then((site) => {
-        res.render('sites/view', { title: 'Site: ' + site.name, site: site })
+        database.checks.fetch({ keys: site.checks }, { include_docs: true }).then(
+            (checks) => {
+                let siteChecks = []
+                checks.rows.forEach(row => {
+                    if ('id' in row) {
+                        siteChecks.push(row.doc)
+                    }
+                })
+                res.render('sites/view', { title: 'Site: ' + site.name, site: site, checks: siteChecks })
+            }
+        )
+    })
+})
+
+router.get('/view/:siteId/check/:checkId', function (req, res, next) {
+    database.checks.get(req.params.checkId, { include_docs: true }).then((check) => {
+        res.render('sites/viewCheck', { title: 'Check: ' + check.name, check: check, siteId: req.params.siteId })
     })
 })
 
@@ -21,14 +37,11 @@ router.get('/register', function (req, res, next) {
 })
 
 router.post('/register', function (req, res, next) {
-    console.log('POST register')
-    console.log(req.body)
     database.sites.insert(
         {
-            name: req.body.name,
-            url: req.body.url,
-            searchString: req.body.searchString,
-            responseCode: req.body.responseCode
+            ...req.body,
+            ...{ 'checks': [] }
+
         }
     )
         .then(
@@ -52,6 +65,31 @@ router.post('/register', function (req, res, next) {
         )
 })
 
+router.get('/register/:siteId/check', function (req, res, next) {
+    database.sites.get(req.params.siteId, { include_docs: true }).then((site) => {
+        res.render('sites/registerCheck', { title: 'Add Check', site: site })
+    })
+})
+
+router.post('/register/:siteId/check', function (req, res, next) {
+    console.log('posted to route: /register/' + req.params.siteId + '/check')
+    database.checks.insert(req.body).then((check) => {
+        database.sites.get(req.params.siteId, { include_docs: true }).then(
+            (site) => {
+                if (!('checks' in site)) {
+                    site.checks = []
+                }
+                site.checks.push(check.id)
+                database.sites.insert(site).then(
+                    (savedSite) => {
+                        res.redirect('/sites/view/' + req.params.siteId + '/check/' + check.id)
+                    }
+                )
+            }
+        )
+    })
+})
+
 router.get('/edit/:siteId', function (req, res, next) {
     database.sites.get(req.params.siteId, { include_docs: true }).then((site) => {
         res.render('sites/edit', { title: 'Edit Site: ' + site.name, site: site })
@@ -64,6 +102,24 @@ router.post('/edit/:siteId', function (req, res, next) {
         database.sites.insert(edditedSite).then(
             (response) => {
                 res.redirect('/sites/view/' + req.params.siteId)
+            }
+        )
+    })
+})
+
+router.get('/edit/:siteId/check/:checkId', function (req, res, next) {
+    database.checks.get(req.params.checkId, { include_docs: true }).then((check) => {
+        res.render('sites/editCheck', { title: 'Edit Check: ' + check.name, check: check })
+    })
+})
+
+router.post('/edit/:siteId/check/:checkId', function (req, res, next) {
+    database.checks.get(req.params.checkId, { include_docs: true }).then((check) => {
+        let edditedCheck = { ...check, ...req.body }
+        delete edditedCheck._rev
+        database.sites.insert(edditedCheck).then(
+            (response) => {
+                res.redirect('/sites/view/' + req.params.siteId + '/check/' + req.params.checkId)
             }
         )
     })

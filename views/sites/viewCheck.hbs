@@ -1,0 +1,11 @@
+ <div class="container">
+  <h1>{{title}}</h1>
+
+<ul class="list-group">
+  <li class="list-group-item active">Name: {{check.name}}</li>
+  <li class="list-group-item">URL: {{check.url}}</li>
+  <li class="list-group-item">Search Term: {{check.searchTerm}}</li>
+  <li class="list-group-item">Status Code: {{check.statusCode}}</li>
+</ul>
+<a class="btn btn-secondary" href="/sites/view/{{siteId}}/">Back</a>
+<a class="btn btn-info float-right" href="/sites/edit/{{siteId}}/check/{{check._id}}">Edit</a>

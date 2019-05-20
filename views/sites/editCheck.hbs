@@ -1,0 +1,43 @@
+<h1>{{title}}</h1>
+<div class="row justify-content-center">
+    <div class="col-md-8 order-md-1">
+      <h4 class="mb-3">Edit Site</h4>
+      {{form-open 'check' url class='needs-validation'}}
+        {{form-hidden "siteId" check.siteId}}
+        <div class="mb-3">
+          <label for="name">Name</label>
+          {{form-text 'name' check.name class="form-control" id="name"}}
+          <div class="invalid-feedback">
+            Valid name is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="url">URL</label>
+          {{form-text 'url' check.url class="form-control" id="url"}}
+          <div class="invalid-feedback">
+            Valid URL is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="searchTerm">Search Term</label>
+          {{form-text 'searchTerm' check.searchTerm class="form-control" id="searchTerm"}}
+          <div class="invalid-feedback">
+            Valid Search Term is required.
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="statusCode">Status Code</label>
+          {{form-text 'statusCode' check.statusCode class="form-control" id="statusCode"}}
+          <div class="invalid-feedback">
+            Valid Status Code is required.
+          </div>
+        </div>
+
+        <hr class="mb-4">
+        {{form-submit 'save' 'Save Check' class="btn btn-primary btn-lg btn-block"}}
+      {{form-close}}
+    </div>
+</div>
