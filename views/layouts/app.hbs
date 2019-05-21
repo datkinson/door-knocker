@@ -38,7 +38,14 @@
       </div>
     </nav>
     {{#if error}}
+      <div class="alert alert-danger" role="alert">
         {{{error}}}
+      </div>
+    {{/if}}
+    {{#if success}}
+      <div class="alert alert-success" role="alert">
+        {{{success}}}
+      </div>
     {{/if}}
     <main role="main">
       {{{body}}}

@@ -1,0 +1,29 @@
+<h1>{{title}}</h1>
+<div class="row justify-content-center">
+    <div class="col-md-8 order-md-1">
+      <h4 class="mb-3">Login</h4>
+      {{form-open 'login' url class='needs-validation'}}
+        <div class="mb-3">
+          <label for="username">Username</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">@</span>
+            </div>
+            {{form-text 'username' user.username class="form-control" id="username" placeholder="Username"}}
+            <div class="invalid-feedback" style="width: 100%;">
+              Your username is required.
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="email">Password <span class="text-muted"></span></label>
+          {{form-password 'password' class="form-control" id="password"}}
+          <div class="invalid-feedback">
+            Please enter a passowrd.
+          </div>
+        </div>
+        <hr class="mb-4">
+        {{form-submit 'login' 'Login' class="btn btn-primary btn-lg btn-block"}}
+      {{form-close}}
+    </div>
+</div>

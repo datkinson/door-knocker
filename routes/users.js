@@ -11,15 +11,42 @@ router.get('/', function (req, res, next) {
     })
 })
 
+router.get('/login', function (req, res, next) {
+    res.render('users/login', { title: 'Login', user: {} })
+})
+
+router.post('/login', function (req, res, next) {
+    let username = req.body.username
+    let password = req.body.password
+    if (username && password) {
+        database.users.list({ include_docs: true }).then(results => {
+            results.rows.forEach(result => {
+                if (result.doc.username === username) {
+                    if (result.doc.password === password) {
+                        req.session.loggedin = true
+                        req.session.username = username
+                        res.redirect('/')
+                        res.end()
+                    }
+                }
+            })
+            console.log('invalid username or password')
+            res.render('users/login', { title: 'Login', user: { username: username }, error: 'Invalid username or password' })
+        })
+    } else {
+        console.log('no username or password specified')
+        res.render('users/login', { title: 'Login', user: { username: username }, error: 'Please enter username and password' })
+    }
+})
+
 router.get('/register', function (req, res, next) {
     res.render('users/register', { title: 'Register', user: {} })
 })
 
 router.post('/register', function (req, res, next) {
-    console.log('POST register')
-    console.log(req.body)
     database.users.insert(
         {
+            _id: req.body.username,
             username: req.body.username,
             firstName: req.body.firstName,
             lastName: req.body.lastName,
