@@ -7,12 +7,12 @@ router.get('/', function (req, res, next) {
     // res.render('index', { title: 'Users' })
     database.users.list({ include_docs: true }).then((results) => {
         const users = results.rows.map((row) => row.doc)
-        res.render('users', { title: 'Users', users: users })
+        res.render('users', { title: 'Users', session: req.session, users: users })
     })
 })
 
 router.get('/login', function (req, res, next) {
-    res.render('users/login', { title: 'Login', user: {} })
+    res.render('users/login', { title: 'Login', session: req.session, user: {} })
 })
 
 router.post('/login', function (req, res, next) {
@@ -31,16 +31,16 @@ router.post('/login', function (req, res, next) {
                 }
             })
             console.log('invalid username or password')
-            res.render('users/login', { title: 'Login', user: { username: username }, error: 'Invalid username or password' })
+            // res.render('users/login', { title: 'Login', session: req.session, user: { username: username }, error: 'Invalid username or password' })
         })
     } else {
         console.log('no username or password specified')
-        res.render('users/login', { title: 'Login', user: { username: username }, error: 'Please enter username and password' })
+        res.render('users/login', { title: 'Login', session: req.session, user: { username: username }, error: 'Please enter username and password' })
     }
 })
 
 router.get('/register', function (req, res, next) {
-    res.render('users/register', { title: 'Register', user: {} })
+    res.render('users/register', { title: 'Register', session: req.session, user: {} })
 })
 
 router.post('/register', function (req, res, next) {
@@ -60,17 +60,17 @@ router.post('/register', function (req, res, next) {
                     .then(
                         (user) => {
                             console.log('Just created user:', user)
-                            res.render('users/welcome', { title: 'Welcome', user: user })
+                            res.render('users/welcome', { title: 'Welcome', session: req.session, user: user })
                         }
                     ).catch(
                         (err) => {
-                            res.render('users/register', { title: 'Register', user: {}, error: err })
+                            res.render('users/register', { title: 'Register', session: req.session, user: {}, error: err })
                         }
                     )
             }
         ).catch(
             (err) => {
-                res.render('users/register', { title: 'Register', user: {}, error: err })
+                res.render('users/register', { title: 'Register', session: req.session, user: {}, error: err })
             }
         )
 })

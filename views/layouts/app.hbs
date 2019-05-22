@@ -35,6 +35,11 @@
         </a>
         <a class="py-2 d-none d-md-inline-block" href="/users">Users</a>
         <a class="py-2 d-none d-md-inline-block" href="/sites">Sites</a>
+        {{#if session.username}}
+        <a class="py-2 d-none d-md-inline-block" href="#">{{session.username}}</a>
+        {{else}}
+        <a class="py-2 d-none d-md-inline-block" href="/users/login">Login</a>
+        {{/if}}
       </div>
     </nav>
     {{#if error}}

@@ -6,7 +6,7 @@ let database = require('../database')
 router.get('/', function (req, res, next) {
     database.sites.list({ include_docs: true }).then((results) => {
         const sites = results.rows.map((row) => row.doc)
-        res.render('sites', { title: 'Sites', sites: sites })
+        res.render('sites', { title: 'Sites', session: req.session, sites: sites })
     })
 })
 
@@ -20,7 +20,7 @@ router.get('/view/:siteId', function (req, res, next) {
                         siteChecks.push(row.doc)
                     }
                 })
-                res.render('sites/view', { title: 'Site: ' + site.name, site: site, checks: siteChecks })
+                res.render('sites/view', { title: 'Site: ' + site.name, session: req.session, site: site, checks: siteChecks })
             }
         )
     })
@@ -28,12 +28,12 @@ router.get('/view/:siteId', function (req, res, next) {
 
 router.get('/view/:siteId/check/:checkId', function (req, res, next) {
     database.checks.get(req.params.checkId, { include_docs: true }).then((check) => {
-        res.render('sites/viewCheck', { title: 'Check: ' + check.name, check: check, siteId: req.params.siteId })
+        res.render('sites/viewCheck', { title: 'Check: ' + check.name, session: req.session, check: check, siteId: req.params.siteId })
     })
 })
 
 router.get('/register', function (req, res, next) {
-    res.render('sites/register', { title: 'Register', site: {} })
+    res.render('sites/register', { title: 'Register', session: req.session, site: {} })
 })
 
 router.post('/register', function (req, res, next) {
@@ -50,24 +50,24 @@ router.post('/register', function (req, res, next) {
                     .then(
                         (site) => {
                             console.log('Just created site:', site)
-                            res.render('sites/success', { title: 'Success', site: site })
+                            res.render('sites/success', { title: 'Success', session: req.session, site: site })
                         }
                     ).catch(
                         (err) => {
-                            res.render('sites/register', { title: 'Register', site: {}, error: err })
+                            res.render('sites/register', { title: 'Register', session: req.session, site: {}, error: err })
                         }
                     )
             }
         ).catch(
             (err) => {
-                res.render('sites/register', { title: 'Register', site: {}, error: err })
+                res.render('sites/register', { title: 'Register', session: req.session, site: {}, error: err })
             }
         )
 })
 
 router.get('/register/:siteId/check', function (req, res, next) {
     database.sites.get(req.params.siteId, { include_docs: true }).then((site) => {
-        res.render('sites/registerCheck', { title: 'Add Check', site: site })
+        res.render('sites/registerCheck', { title: 'Add Check', session: req.session, site: site })
     })
 })
 
@@ -109,7 +109,7 @@ router.post('/edit/:siteId', function (req, res, next) {
 
 router.get('/edit/:siteId/check/:checkId', function (req, res, next) {
     database.checks.get(req.params.checkId, { include_docs: true }).then((check) => {
-        res.render('sites/editCheck', { title: 'Edit Check: ' + check.name, check: check })
+        res.render('sites/editCheck', { title: 'Edit Check: ' + check.name, session: req.session, check: check })
     })
 })
 
