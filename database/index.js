@@ -18,11 +18,11 @@ Promise.resolve(nano.db.create('users').catch(() => {
     console.log('unable to create database: users')
 }))
 database.users = nano.db.use('users')
-Promise.resolve(database.users.insert({ _id: 'admin', username: 'admin', password: 'admin' }).catch(
-    () => {
-        console.log('admin user already exists')
-    }
-))
+// Promise.resolve(database.users.insert({ _id: 'admin', username: 'admin', password: 'admin' }).catch(
+//     () => {
+//         console.log('admin user already exists')
+//     }
+// ))
 // console.log('creating users database', database)
 
 Promise.resolve(nano.db.create('groups').catch(() => {

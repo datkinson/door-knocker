@@ -18,7 +18,7 @@ services:
 
   app:
     build: .
-    command: bash -c "yarn install && npm run start:dev"
+    command: ./wait-for-it.sh couchdb:5984 -- bash ./entrypoint.sh
     ports:
       - "5000:5000"
     volumes:

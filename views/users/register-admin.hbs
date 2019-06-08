@@ -1,0 +1,24 @@
+<h1>{{title}}</h1>
+<div class="row justify-content-center">
+    <div class="col-md-8 order-md-1">
+      <h4 class="mb-3">Set admin password</h4>
+      {{form-open 'user' url class='needs-validation'}}
+        <div class="mb-3">
+          <label for="email">Email <span class="text-muted"></span></label>
+          {{form-email 'email' user.email class="form-control" id="email" placeholder="you@example.com"}}
+          <div class="invalid-feedback">
+            Please enter a valid email address.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="email">Password <span class="text-muted"></span></label>
+          {{form-password 'password' class="form-control" id="password"}}
+          <div class="invalid-feedback">
+            Please enter a passowrd.
+          </div>
+        </div>
+        <hr class="mb-4">
+        {{form-submit 'save' 'Save Password' class="btn btn-primary btn-lg btn-block"}}
+      {{form-close}}
+    </div>
+</div>
