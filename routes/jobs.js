@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
             let timeout = 60
             let expiredBefore = timeNow - timeout
             if (!result.doc.checkPending || result.doc.checkPending < expiredBefore) {
-                console.log('found check to be checked', result)
+                // console.log('found check to be checked', result)
                 jobFound = true
                 result.doc.checkPending = timeNow
                 database.checks.insert(result.doc).then(
@@ -25,6 +25,27 @@ router.get('/', function (req, res, next) {
             res.json({})
         }
     })
+})
+
+router.post('/', function (req, res, next) {
+    if (req.body.hasOwnProperty('id') && req.body.id !== undefined) {
+        console.log('locating check with id: ' + req.body.id)
+        database.checks.get(req.body.id, { include_docs: true }).then((check) => {
+            console.log('found check:', check)
+            if (!check.hasOwnProperty('responses')) {
+                check.responses = []
+            }
+            check.responses.push(req.body)
+            console.log('updated check:', check)
+            database.sites.insert(check).then(
+                (response) => {
+                    res.send('ok')
+                }
+            )
+        })
+    } else {
+        res.send('bad')
+    }
 })
 
 module.exports = router

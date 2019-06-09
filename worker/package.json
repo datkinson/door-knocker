@@ -1,0 +1,14 @@
+{
+  "name": "worker",
+  "version": "0.1.0",
+  "main": "worker.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./worker.js",
+    "lint": "eslint . --ext .js"
+  },
+  "dependencies": {
+    "request": "^2.88.0",
+    "sleep": "^6.1.0"
+  }
+}

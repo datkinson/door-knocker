@@ -118,7 +118,7 @@ router.post('/edit/:siteId/check/:checkId', auth.isAuthorized, function (req, re
     database.checks.get(req.params.checkId, { include_docs: true }).then((check) => {
         let edditedCheck = { ...check, ...req.body }
         delete edditedCheck._rev
-        database.sites.insert(edditedCheck).then(
+        database.checks.insert(edditedCheck).then(
             (response) => {
                 res.redirect('/sites/view/' + req.params.siteId + '/check/' + req.params.checkId)
             }
